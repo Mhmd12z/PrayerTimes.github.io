@@ -1,0 +1,278 @@
+* {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+:root {
+    --main-trans: all .3s ease-in-out;
+}
+
+@keyframes dropDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: url("./images/fajr-large.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--main-trans);
+}
+
+ul {
+    list-style: none;
+}
+
+.closed {
+    display: none;
+}
+
+.main .container {
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 800;
+    gap: 20px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.404);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.155);
+}
+
+.main .location {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 30px 100px;
+    color: #eee;
+    border-radius: 10px;
+}
+
+.main .location .title {
+    font-size: 45px;
+}
+
+.main .location .date {
+    font-size: 25px;
+}
+
+.main .location .day {
+    font-size: 25px;
+}
+
+.main .cities {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.652);
+    color: #eee;
+    outline: none;
+    border: none;
+}
+
+.main .nextSalah {
+    font-weight: 600;
+}
+
+.prayers .prayerTimes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 200px;
+    gap: 30px;
+    background: rgba(0, 0, 0, 0.404);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.155);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.prayerTimes li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    color: #eee;
+    font-weight: 800;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    transition: var(--main-trans);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.prayerTimes li::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    filter: brightness(20%);
+    transition: var(--main-trans);
+}
+
+.prayerTimes .active {
+    transform: scale(1.05);
+    border: 2px solid orange;
+    box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.38);
+}
+
+.prayerTimes .duhur:hover,
+.prayerTimes .duhur.active {
+    text-shadow: 0 0 5px black;
+}
+
+.prayerTimes .asr:hover,
+.prayerTimes .asr.active {
+    text-shadow: 0 0 5px black;
+}
+
+.prayerTimes .active::before {
+    filter: brightness(100%);
+}
+
+.prayerTimes li:hover::before {
+    filter: brightness(100%);
+    transform: scale(1.2);
+}
+
+.prayerTimes .fajr::before {
+    background: url("./images/fajr-small.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.prayerTimes .duhur::before {
+    background: url("./images/duhur-small.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.prayerTimes .asr::before {
+    background: url("./images/asr-small.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.prayerTimes .maghreb::before {
+    background: url("./images/maghreb-small.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.prayerTimes .ishaa::before {
+    background: url("./images/ishaa-small.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media (max-width:767px) {
+    body {
+        display: block;
+        height: 100%;
+    }
+
+    .app {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .main .container {
+        text-align: center;
+    }
+
+    .main .title {
+        font-size: 35px !important;
+    }
+
+    .main .date {
+        font-size: 15px !important;
+    }
+
+    .main .day {
+        font-size: 20px !important;
+    }
+
+    .main .nextSalah {
+        font-size: 12px;
+    }
+
+    .main .location {
+        width: 100%;
+    }
+
+    .prayers .prayerTimes {
+        flex-direction: column;
+        height: 100%;
+        gap: 20px;
+    }
+
+    .prayers .prayerTimes li {
+        height: 150px;
+    }
+
+    .prayers .prayerTimes .active::before {
+        transform: scale(1.05);
+    }
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto;
+}
+
+@media (min-width:767px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width:992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width:1200px) {
+    .container {
+        width: 1170px;
+    }
+}

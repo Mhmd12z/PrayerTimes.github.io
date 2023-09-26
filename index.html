@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/icon-pray.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <title>Prayer Times</title>
+</head>
+
+<body>
+    <div class="app">
+        <div class="main">
+            <div class="container">
+                <div class="location">
+                    <div class="title">SAIDA</div>
+                    <div class="date"></div>
+                    <div class="day"></div>
+                    <div class="nextSalah"><span class="leftTime"></span></div>
+                </div>
+                <select name="" id="" class="cities">
+
+                </select>
+            </div>
+        </div>
+        <div class="prayers">
+            <div class="container">
+                <ul class="prayerTimes">
+                    <li class="fajr">
+                        <div class="alarm"><i class="fa-solid fa-bell"></i></div>
+                        <div class="name">Fajr</div>
+                        <div class="time"></div><span class="zone">AM</span>
+                    </li>
+                    <li class="duhur">
+                        <div class="alarm"><i class="fa-solid fa-bell"></i></div>
+                        <div class="name">Dhuhr</div>
+                        <div class="time"></div><span class="zone">PM</span>
+                    </li>
+                    <li class="asr">
+                        <div class="alarm"><i class="fa-solid fa-bell"></i></div>
+                        <div class="name">Asr</div>
+                        <div class="time"></div><span class="zone">PM</span>
+                    </li>
+                    <li class="maghreb">
+                        <div class="alarm"><i class="fa-solid fa-bell"></i></div>
+                        <div class="name">Maghrib</div>
+                        <div class="time"></div><span class="zone">PM</span>
+                    </li>
+                    <li class="ishaa">
+                        <div class="alarm"><i class="fa-solid fa-bell"></i></div>
+                        <div class="name">Ishaa</div>
+                        <div class="time"></div><span class="zone">PM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script src="master.js"></script>
+</body>
+
+</html>
