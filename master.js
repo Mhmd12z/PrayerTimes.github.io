@@ -32,107 +32,118 @@ options.addEventListener("change", function () {
     params = {
         country: "LB",
         city: this.value
-    }
+    };
     getTiming();
     cityTitle.innerHTML = this.value;
-})
+});
 function getMinutes(time) {
-    return time.split(":")[1];
+    return Number(time.split(":")[1]);
 }
 function getHours(time) {
-    return time.split(":")[0];
+    return Number(time.split(":")[0]);
 }
-function getTiming() {
-    return axios.get('http://api.aladhan.com/v1/timingsByCity', {
-        params: params
-    })
-        .then(function (response) {
-            times = response.data.data.timings;
-            fajr.innerHTML = times.Fajr;
-            duhur.innerHTML = times.Dhuhr;
-            asr.innerHTML = times.Asr;
-            maghreb.innerHTML = times.Maghrib;
-            ishaa.innerHTML = times.Isha;
-            let salatName = "";
-            dateTitle.innerHTML = response.data.data.date.readable;
-            dayTitle.innerHTML = response.data.data.date.hijri.weekday.ar;
-            let minNow = new Date().getMinutes();
-            let minDifference = 0;
-            let hrsDifference = 0;
-            let prayIndex = 0;
-            let hrsNow = new Date().getHours();
-            if (getHours(times.Fajr) >= hrsNow && getMinutes(times.Fajr) <= minNow) {
-                document.querySelector(".fajr").classList.add("active");
-                if (getHours(times.Fajr) > hrsNow) {
-                    hrsDifference = getHours(times.Fajr) - hrsNow;
-                }
-                minDifference = Math.abs(getMinutes(times.Fajr) - minNow);
-                prayIndex = 0;
-                salatName = "Fajr";
+async function getTiming() {
+    try {
+        const response = await fetch('http://api.aladhan.com/v1/timingsByCity?' + new URLSearchParams(params).toString());
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        times = data.data.timings;
+        fajr.innerHTML = times.Fajr;
+        duhur.innerHTML = times.Dhuhr;
+        asr.innerHTML = times.Asr;
+        maghreb.innerHTML = times.Maghrib;
+        ishaa.innerHTML = times.Isha;
+        let salatName = "";
+        dateTitle.innerHTML = data.data.date.readable;
+        dayTitle.innerHTML = data.data.date.hijri.weekday.ar;
+        let minNow = new Date().getMinutes();
+        let minDifference = 0;
+        let hrsDifference = 0;
+        let prayIndex = 0;
+        let hrsNow = new Date().getHours();
+        if (getHours(times.Fajr) >= hrsNow && getMinutes(times.Fajr) <= minNow) {
+            document.querySelector(".fajr").classList.add("active");
+            if (getHours(times.Fajr) > hrsNow) {
+                hrsDifference = getHours(times.Fajr) - hrsNow;
             }
-            else if (getHours(times.Dhuhr) >= hrsNow && getMinutes(times.Dhuhr) <= minNow) {
-                document.querySelector(".duhur").classList.add("active");
-                if (getHours(times.Dhuhr) > hrsNow) {
-                    hrsDifference = getHours(times.Dhuhr) - hrsNow;
-                }
-                minDifference = Math.abs(getMinutes(times.Dhuhr) - minNow);
-                prayIndex = 1;
-                salatName = "Dhuhr";
+            sign = getMinutes(times.Fajr) - minNow;
+            minDifference = Math.abs(getMinutes(times.Fajr) - minNow);
+            prayIndex = 0;
+            salatName = "Fajr";
+        }
+        else if (getHours(times.Dhuhr) >= hrsNow && getMinutes(times.Dhuhr) <= minNow) {
+            document.querySelector(".duhur").classList.add("active");
+            if (getHours(times.Dhuhr) > hrsNow) {
+                hrsDifference = getHours(times.Dhuhr) - hrsNow;
+            }
+            sign = getMinutes(times.Dhuhr) - minNow;
+            minDifference = Math.abs(getMinutes(times.Dhuhr) - minNow);
+            prayIndex = 1;
+            salatName = "Dhuhr";
 
+        }
+        else if (getHours(times.Asr) >= hrsNow && getMinutes(times.Asr) <= minNow) {
+            document.querySelector(".asr").classList.add("active")
+            if (getHours(times.Asr) > hrsNow) {
+                hrsDifference = getHours(times.Asr) - hrsNow;
             }
-            else if (getHours(times.Asr) >= hrsNow && getMinutes(times.Asr) <= minNow) {
-                document.querySelector(".asr").classList.add("active")
-                if (getHours(times.Asr) > hrsNow) {
-                    hrsDifference = getHours(times.Asr) - hrsNow;
-                }
-                minDifference = Math.abs(getMinutes(times.Asr) - minNow);
-                prayIndex = 2;
-                salatName = "Asr";
+            sign = getMinutes(times.Asr) - minNow;
+            minDifference = Math.abs(getMinutes(times.Asr) - minNow);
+            prayIndex = 2;
+            salatName = "Asr";
 
+        }
+        else if (getHours(times.Maghrib) >= hrsNow && getMinutes(times.Maghrib) <= minNow) {
+            document.querySelector(".maghreb").classList.add("active")
+            if (getHours(times.Maghrib) > hrsNow) {
+                hrsDifference = getHours(times.Maghrib) - hrsNow;
             }
-            else if (getHours(times.Maghrib) >= hrsNow && getMinutes(times.Maghrib) <= minNow) {
-                document.querySelector(".maghreb").classList.add("active")
-                if (getHours(times.Maghrib) > hrsNow) {
-                    hrsDifference = getHours(times.Maghrib) - hrsNow;
-                }
-                minDifference = Math.abs(getMinutes(times.Maghrib) - minNow);
-                prayIndex = 3;
-                salatName = "Maghrib";
+            sign = getMinutes(times.Maghrib) - minNow;
+            minDifference = Math.abs(getMinutes(times.Maghrib) - minNow);
+            prayIndex = 3;
+            salatName = "Maghrib";
 
+        }
+        else if (getHours(times.Isha) >= hrsNow && getMinutes(times.Isha) <= minNow) {
+            document.querySelector(".ishaa").classList.add("active")
+            if (getHours(times.Isha) > hrsNow) {
+                hrsDifference = getHours(times.Isha) - hrsNow;
             }
-            else if (getHours(times.Isha) >= hrsNow && getMinutes(times.Isha) <= minNow) {
-                document.querySelector(".ishaa").classList.add("active")
-                if (getHours(times.Isha) > hrsNow) {
-                    hrsDifference = getHours(times.Isha) - hrsNow;
-                }
-                minDifference = Math.abs(getMinutes(times.Isha) - minNow);
-                prayIndex = 4;
-                salatName = "Ishaa";
-            }
-            else {
-                document.querySelector(".fajr").classList.add("active");
-                leftTimeCount.innerHTML = "Next Salah Is Al-Fajr";
-                leftTimeCount.style.color = "gold";
-            }
-            if (hrsDifference != 0) {
-                leftTimeCount.innerHTML = hrsDifference + " hr " + minDifference + " Min For " + salatName;
-            } else {
-                if (minDifference != 0) {
+            sign = getMinutes(times.Isha) - minNow;
+            minDifference = Math.abs(getMinutes(times.Isha) - minNow);
+            prayIndex = 4;
+            salatName = "Ishaa";
+        }
+        else {
+            document.querySelector(".fajr").classList.add("active");
+            leftTimeCount.innerHTML = "Next Salah Is Al-Fajr";
+            leftTimeCount.style.color = "gold";
+        }
+        if (hrsDifference != 0) {
+            leftTimeCount.innerHTML = hrsDifference + " hr " + minDifference + " Min For " + salatName;
+        } else {
+            if (minDifference != 0) {
+                if (sign >= 0) {
                     leftTimeCount.innerHTML = minDifference + " Min For " + salatName;
-                }
-                if (minDifference < 30) {
-                    leftTimeCount.parentElement.style.color = "red";
+                } else {
+                    leftTimeCount.innerHTML = minDifference + " Min From " + salatName;
                 }
             }
-            document.body.style.cssText = `
+            if (minDifference < 30 && minDifference > 0) {
+                leftTimeCount.parentElement.style.color = "red";
+            }
+        }
+        document.body.style.cssText = `
         background:url(${backgrounds[prayIndex]});
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
     `;
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+    }
+    catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
 }
 getTiming();
